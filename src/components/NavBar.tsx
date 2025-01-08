@@ -1,4 +1,3 @@
-'use client'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -8,12 +7,13 @@ import Link from 'next/link'
 import { MenuItem, Select } from '@mui/material'
 
 const Navbar = () => {
+  const APP_NAME = process.env.APP_NAME
   return (
     <Box sx={{ flexGrow: 1, marginBottom: '1em' }}>
       <AppBar position='static'>
         <Toolbar>
           <Typography variant='h6' component='span' sx={{ flexGrow: 1 }}>
-            Challenge App
+            {APP_NAME}
           </Typography>
           <Select
             className='text-white'
