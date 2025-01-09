@@ -1,0 +1,42 @@
+import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
+import { getBoats } from '@/service/boatServices'
+
+const BoatCard = async () => {
+  const boats = await getBoats()
+  console.log('***  ~ BoatCard  ~ boats:', boats)
+
+  return (
+    <Box className='flex flex-col items-center '>
+      <h1>Boats</h1>
+      {boats?.length > 0 &&
+        boats.map((boat) => (
+          <div key={boat.name}>
+            <Card className='mb-4' sx={{ width: 345, height: 400 }}>
+              <CardMedia
+                component='img'
+                className='h-[250px]'
+                alt={boat.name}
+                image={boat.image}
+              />
+              <CardContent>
+                <Typography gutterBottom variant='h5' component='div'>
+                  {boat.name}
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+                  Brand: {boat.brand}
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+                  model: {boat.model}
+                </Typography>
+                <Typography variant='body2' sx={{ color: 'text.secondary' }}>
+                  Maximum Capacity: {boat.maximum_capacity}
+                </Typography>
+              </CardContent>
+            </Card>
+          </div>
+        ))}
+    </Box>
+  )
+}
+
+export default BoatCard
