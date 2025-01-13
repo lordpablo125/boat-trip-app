@@ -17,12 +17,10 @@ const EmployeeList = async () => {
 
   return (
     <Box className='flex flex-col items-start pl-4 '>
-      <Divider />
       <TableContainer className='flex flex-col items-center' component={Paper}>
         <Typography variant='h6' component='h2'>
           Employee List
         </Typography>
-        <Divider />
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow>

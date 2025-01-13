@@ -3,11 +3,12 @@ import { getBoats } from '@/service/boatServices'
 
 const BoatCard = async () => {
   const boats = await getBoats()
-  console.log('***  ~ BoatCard  ~ boats:', boats)
 
   return (
     <Box className='flex flex-col items-center '>
-      <h1>Boats</h1>
+      <Typography variant='h6' component='h2'>
+        Boats list
+      </Typography>
       {boats?.length > 0 &&
         boats.map((boat) => (
           <div key={boat.name}>

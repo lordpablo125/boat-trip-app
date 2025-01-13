@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     <Box sx={{ flexGrow: 1, marginBottom: '1em' }}>
       <AppBar position='static'>
-        <Toolbar>
+        <Toolbar className='gap-2'>
           <Typography variant='h6' component='span' sx={{ flexGrow: 1 }}>
             {APP_NAME}
           </Typography>
@@ -24,11 +24,11 @@ const Navbar = () => {
             <MenuItem value='USD'>USA</MenuItem>
             <MenuItem value='EUR'>EUR</MenuItem>
           </Select>
-          <Link href='/product-list' passHref>
-            <Button color='inherit'>List</Button>
+          <Link href='/employees' passHref>
+            <Button color='inherit'>Employees</Button>
           </Link>
-          <Link href='/product-create' passHref>
-            <Button color='inherit'>Create</Button>
+          <Link href='/boats' passHref>
+            <Button color='inherit'>Boats</Button>
           </Link>
         </Toolbar>
       </AppBar>
