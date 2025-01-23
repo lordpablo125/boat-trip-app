@@ -1,7 +1,6 @@
+import { Employee, EmployeeTableProps } from '@/types'
 import {
   Box,
-  Divider,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -10,11 +9,9 @@ import {
   TableRow,
   Typography
 } from '@mui/material'
-import { getEmployees } from '@/service/employeeServices'
+import { FC } from 'react'
 
-const EmployeeList = async () => {
-  const employees = await getEmployees()
-
+const EmployeeList: FC<EmployeeTableProps> = async ({ employees }) => {
   return (
     <Box className='flex flex-col items-start pl-4 '>
       <TableContainer className='flex flex-col items-center'>
@@ -30,7 +27,7 @@ const EmployeeList = async () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {employees.map(({ id, name, role }) => (
+            {employees.map(({ id, name, role }: Employee) => (
               <TableRow key={name} className='hover:bg-slate-300'>
                 <TableCell component='th' scope='row'>
                   {id}
