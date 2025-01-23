@@ -20,7 +20,7 @@ const EmployeeList: FC<EmployeeTableProps> = async ({ employees }) => {
         </Typography>
         <Table aria-label='simple table'>
           <TableHead>
-            <TableRow>
+            <TableRow sx={{ '& > th': { fontWeight: 700 } }}>
               <TableCell>Id</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Role</TableCell>

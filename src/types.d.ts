@@ -19,3 +19,13 @@ export type Employee = {
 export type EmployeeTableProps = {
   employees: Employee[]
 }
+
+export type Passager = {
+  id: number
+  name: string
+  dni: string
+}
+
+export type PassagerTableProps = {
+  passagers: Passager[]
+}

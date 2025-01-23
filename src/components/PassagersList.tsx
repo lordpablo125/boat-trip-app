@@ -1,6 +1,6 @@
+import { PassagerTableProps } from '@/types'
 import {
   Box,
-  Paper,
   Table,
   TableBody,
   TableCell,
@@ -9,11 +9,9 @@ import {
   TableRow,
   Typography
 } from '@mui/material'
-import { getPassagers } from '@/service/passagerServices'
+import { FC } from 'react'
 
-const PassagersList = async () => {
-  const passagers = await getPassagers()
-
+const PassagersList: FC<PassagerTableProps> = async ({ passagers }) => {
   return (
     <Box className='flex flex-col items-start pl-4 '>
       <TableContainer className='flex flex-col items-center w-auto'>
@@ -22,7 +20,7 @@ const PassagersList = async () => {
         </Typography>
         <Table aria-label='simple table'>
           <TableHead>
-            <TableRow>
+            <TableRow sx={{ '& > th': { fontWeight: 700 } }}>
               <TableCell>Id</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>DNI</TableCell>
