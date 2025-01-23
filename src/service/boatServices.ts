@@ -3,7 +3,7 @@ import { api } from './api'
 export const getBoats = async () => {
   try {
     const response = await api.get('/boats?populate=image')
-    const { ENDPOINT } = process.env
+    const ENDPOINT = process.env.NEXT_PUBLIC_ENDPOINT
     const data = (await response?.data.data) || []
 
     let formattedData = []

@@ -30,6 +30,9 @@ const Navbar = () => {
           <Link href='/boats' passHref>
             <Button color='inherit'>Boats</Button>
           </Link>
+          <Link href='/passagers' passHref>
+            <Button color='inherit'>Passagers</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </Box>
