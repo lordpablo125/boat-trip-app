@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom' // Para métodos como toBeInTheDocument
-import BoatCard from '../../components/BoatCard'
+import '@testing-library/jest-dom'
+import BoatCard from '@/components/BoatCard'
 
+//Test CSR
 describe('BoatCard tests', () => {
   const mockBoats = [
     {

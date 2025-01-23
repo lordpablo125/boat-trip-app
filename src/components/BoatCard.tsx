@@ -1,11 +1,7 @@
 'use client'
-import { Boat } from '@/types'
+import { Boat, BoatCardProps } from '@/types'
 import { Box, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import { FC } from 'react'
-
-type BoatCardProps = {
-  boats: Boat[]
-}
 
 const BoatCard: FC<BoatCardProps> = ({ boats }) => {
   return (
