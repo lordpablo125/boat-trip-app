@@ -1,3 +1,7 @@
+export type Id = {
+  id: number | undefined
+}
+
 export type Boat = {
   name: string
   brand: string
@@ -11,7 +15,7 @@ export type BoatCardProps = {
 }
 
 export type Employee = {
-  id: number
+  id?: number
   name: string
   role: string
 }
@@ -21,7 +25,7 @@ export type EmployeeTableProps = {
 }
 
 export type Passager = {
-  id: number
+  id?: number
   name: string
   dni: string
 }
