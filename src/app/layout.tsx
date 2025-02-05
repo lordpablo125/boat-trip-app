@@ -12,7 +12,7 @@ export default function RootLayout({
       <AppRouterCacheProvider>
         <body>
           <Navbar />
-          {children}
+          <div className='w-3/4 mx-auto'>{children}</div>
         </body>
       </AppRouterCacheProvider>
     </html>
