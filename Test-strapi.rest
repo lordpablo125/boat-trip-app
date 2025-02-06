@@ -1,0 +1,55 @@
+GET http://127.0.0.0:1337/api/categories
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+###
+GET http://127.0.0.0:1337/api/employees
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+###
+GET http://127.0.0.0:1337/api/boats?populate=image
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+###
+GET http://127.0.0.0:1337/api/passagers
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+
+
+
+###
+GET http://127.0.0.0:1337/api/employees
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+###
+GET http://127.0.0.0:1337/api/employees?filters[id][$eq]=5
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+###
+
+###
+GET http://127.0.0.0:1337/api/employees/wsqhydicgshnnz7h98mklxrz
+###
+
+#Test http://localhost:1337/api
+GET http://localhost:1337/api/employees/di7o2rqd7ik1ob1abhjz0erp
+###
+
+DELETE  http://127.0.0.0:1337/api/employees/tttk1bhhmr7r4spd2yirtl7w
+###
+
+POST  http://127.0.0.0:1337/api/employees
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+content-type: application/json
+
+{
+  "data":  {
+    "name": "test_1",
+    "role":"assistant"
+}
+}
+###
+
+PUT   http://localhost:1337/api/employees/p3ie2w5ufz4ach1vyaez1tlu
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+content-type: application/json
+
+{
+  "data":  {
+    "name": "Ivan Draggo"
+}
+}
+###

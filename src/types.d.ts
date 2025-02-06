@@ -1,6 +1,9 @@
 export type Id = {
   id: number | undefined
 }
+export type DocumentId = {
+  documentId: string
+}
 
 export type Boat = {
   name: string
@@ -18,6 +21,7 @@ export type Employee = {
   id?: number
   name: string
   role: string
+  documentId: DocumentId
 }
 
 export type EmployeeTableProps = {

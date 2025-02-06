@@ -1,6 +1,6 @@
 'use client'
 import { deleteEmployee } from '@/service/employeeServices'
-import { Employee, EmployeeTableProps, Id } from '@/types'
+import { DocumentId, Employee, EmployeeTableProps, Id } from '@/types'
 import {
   Box,
   Button,
@@ -22,8 +22,8 @@ import EditNoteIcon from '@mui/icons-material/EditNote'
 const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
   const { push } = useRouter()
 
-  const handleRowClick = (id: Id) => {
-    push(`/employees/edit/${id}`)
+  const handleRowClick = (documentId: DocumentId) => {
+    push(`/employees/edit/${documentId}`)
   }
   return (
     <Box className='flex flex-col items-start pl-4 '>
@@ -32,7 +32,7 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
           Employee List
         </Typography>
         <Link href='/employees/create' className='ml-auto mr-4' passHref>
-          <Button color='primary' variant='contained'>
+          <Button color='primary' variant='outlined'>
             <AddIcon />
             Add new
           </Button>
@@ -49,11 +49,11 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
           </TableHead>
           <TableBody>
             {employees.length &&
-              employees.map(({ id, name, role }: Employee) => (
+              employees.map(({ id, name, role, documentId }: Employee) => (
                 <TableRow
                   key={name}
                   className='hover:bg-slate-300'
-                  onClick={() => handleRowClick(id)}
+                  onClick={() => handleRowClick(documentId)}
                 >
                   <TableCell component='th' scope='row'>
                     {id}
@@ -63,7 +63,7 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
                   <TableCell>
                     <Box className='text-right'>
                       <Link
-                        href={`/employees/edit/${id}`}
+                        href={`/employees/edit/${documentId}`}
                         className='ml-auto mr-4'
                         passHref
                       >
@@ -74,7 +74,7 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
                       <Button
                         color='error'
                         variant='outlined'
-                        onClick={() => deleteEmployee(id)}
+                        onClick={() => deleteEmployee(documentId)}
                       >
                         <DeleteIcon />
                       </Button>

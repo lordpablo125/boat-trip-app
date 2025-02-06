@@ -1,10 +1,10 @@
 'use server'
 import FormEmployee from '@/components/EmployeeForm'
-import { editEmployee, getEmployee } from '@/service/employeeServices'
+import { getEmployee } from '@/service/employeeServices'
 import React from 'react'
 
 const EditEmployee = async ({ params }) => {
-  const { id } = params
+  const { id } = await params
   const employee = await getEmployee(id)
 
   return <FormEmployee title={'Edit Employee'} employee={employee} />

@@ -1,4 +1,4 @@
-import { Employee, Id } from '@/types'
+import { DocumentId, Employee, Id } from '@/types'
 import { api } from './api'
 
 export const getEmployees = async () => {
@@ -19,7 +19,6 @@ export const createEmployee = async (employee: Employee) => {
     const response = await api.post('/employees', payload)
     const success = response.status === 201
     const data = (await response?.data.data) || []
-    console.log('***  ~ createEmployee  ~ employee data:', data)
 
     return { success, data }
   } catch (error) {
@@ -32,7 +31,6 @@ export const deleteEmployee = async (id: Id) => {
   try {
     const response = await api.delete(`/employees/${id}`)
     const data = (await response?.data.data) || []
-    console.log('***  ~ delete  ~ employee data:', data)
 
     return data
   } catch (error) {
@@ -41,10 +39,10 @@ export const deleteEmployee = async (id: Id) => {
   }
 }
 
-export const getEmployee = async (id: Id) => {
+export const getEmployee = async (id: DocumentId) => {
   try {
-    const response = await api.get(`/employees?filters[id][$eq]=${id}`)
-    const data = (await response?.data.data[0]) || []
+    const response = await api.get(`/employees/${id}`)
+    const data = (await response?.data.data) || []
 
     return data
   } catch (error) {

@@ -24,7 +24,7 @@ const FormEmployee: FC<EmployeeFormProps> = ({ title, employee = {} }) => {
   const { push } = useRouter()
   const [open, setOpen] = React.useState(false)
 
-  const handleClick = () => {
+  const handleSuccess = () => {
     setOpen(true)
     push(`/employees`)
   }
@@ -54,8 +54,7 @@ const FormEmployee: FC<EmployeeFormProps> = ({ title, employee = {} }) => {
       //create
       const { success } = await createEmployee(data)
       if (success) {
-        setOpen(true)
-        push(`/employees`)
+        handleSuccess()
       }
     }
   }
@@ -97,7 +96,7 @@ const FormEmployee: FC<EmployeeFormProps> = ({ title, employee = {} }) => {
           </Button>
         </Box>
       </Box>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={open} autoHideDuration={8000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
           variant='filled'
