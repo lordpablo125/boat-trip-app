@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { MenuItem, Select } from '@mui/material'
 
 const Navbar = () => {
-  const APP_NAME = process.env.APP_NAME
+  const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME
   return (
     <Box sx={{ flexGrow: 1, marginBottom: '1em' }}>
       <AppBar position='static'>
