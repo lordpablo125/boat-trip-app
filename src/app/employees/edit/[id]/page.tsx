@@ -2,17 +2,10 @@
 'use client'
 import FormEmployee from '@/components/EmployeeForm'
 import { useGetEmployee } from '@/service/employeeServices'
+import { ParamProp } from '@/types'
 import React, { FC, use } from 'react'
 
-interface Params {
-  id: string
-}
-
-interface EditEmployeeProps {
-  params: Promise<Params>
-}
-
-const EditEmployee: FC<EditEmployeeProps> = ({ params }) => {
+const EditEmployee: FC<ParamProp> = ({ params }) => {
   const { id }: { id: string } = use(params)
   const employee = useGetEmployee(id)
 

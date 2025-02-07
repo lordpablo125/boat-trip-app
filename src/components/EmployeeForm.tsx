@@ -1,5 +1,5 @@
 'use client'
-import { createEmployee, editEmployee } from '@/service/employeeServices'
+import { useCreateEmployee, useEditEmployee } from '@/service/employeeServices'
 import { Employee } from '@/types'
 import {
   Alert,
@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 
 type EmployeeFormProps = {
   title: string
@@ -23,6 +23,8 @@ type EmployeeFormProps = {
 const FormEmployee: FC<EmployeeFormProps> = ({ title, employee = {} }) => {
   const { push } = useRouter()
   const [open, setOpen] = React.useState(false)
+  const { mutate: createEmployee, isSuccess: isCreateSuccess } =
+    useCreateEmployee()
 
   const handleSuccess = () => {
     setOpen(true)
@@ -44,22 +46,26 @@ const FormEmployee: FC<EmployeeFormProps> = ({ title, employee = {} }) => {
     e.preventDefault()
     const formData = new FormData(e.target)
     const data: Employee = Object.fromEntries(formData.entries())
+
     const isId = employee?.documentId
 
     if (isId) {
       //edit
-      const { success } = await editEmployee(isId, data)
-      if (success) {
+      //WIP Check later
+      const { isSuccess } = await useEditEmployee(isId, data)
+      if (isSuccess) {
         handleSuccess()
       }
     } else {
-      //create
-      const { success } = await createEmployee(data)
-      if (success) {
-        handleSuccess()
-      }
+      createEmployee(data)
     }
   }
+
+  useEffect(() => {
+    if (isCreateSuccess) {
+      handleSuccess()
+    }
+  }, [isCreateSuccess])
 
   return (
     <Box className='flex justify-center flex-col'>

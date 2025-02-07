@@ -1,6 +1,6 @@
 import { DocumentId, Employee, Id } from '@/types'
 import { api } from './api'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 export const getEmployees = async () => {
   try {
@@ -23,11 +23,10 @@ export const useGetEmployees = () => {
   return data
 }
 
-export const getEmployee = async (id: DocumentId) => {
+export const getEmployee = async (documentId: DocumentId) => {
   try {
-    const response = await api.get(`/employees/${id}`)
+    const response = await api.get(`/employees/${documentId}`)
     const data = (await response?.data.data) || {}
-    console.log('***  ~ getEmployee  ~ response:', response)
 
     return data
   } catch (error) {
@@ -36,28 +35,56 @@ export const getEmployee = async (id: DocumentId) => {
   }
 }
 
-export const useGetEmployee = (id) => {
+export const useGetEmployee = (documentId: DocumentId) => {
   const { data } = useQuery({
     queryKey: ['employee'],
-    queryFn: () => getEmployee(id)
+    queryFn: () => getEmployee(documentId)
   })
 
   return data
 }
 
-export const createEmployee = async (employee: Employee) => {
+export const editEmployee = async (
+  documentId: DocumentId,
+  employee: Employee
+) => {
   try {
     const payload = { data: employee }
-    const response = await api.post('/employees', payload)
-    const success = response.status === 201
+    const response = await api.put(`/employees/${documentId}`, payload)
+    const success = response.status === 200
     const data = (await response?.data.data) || []
 
     return { success, data }
   } catch (error) {
     console.error('Error:', error)
+    return []
+  }
+}
+
+//WIP Check later
+export const useEditEmployee = (documentId: DocumentId, employee: Employee) =>
+  useMutation({
+    mutationKey: ['employee'],
+    mutationFn: () => editEmployee(documentId, employee)
+  })
+
+export const createEmployee = async (employee: Employee) => {
+  try {
+    const payload = { data: employee }
+    const response = await api.post('/employees', payload)
+    const data = (await response?.data.data) || []
+
+    return data
+  } catch (error) {
+    console.error('Error:', error)
     return {}
   }
 }
+
+export const useCreateEmployee = () =>
+  useMutation({
+    mutationFn: createEmployee
+  })
 
 export const deleteEmployee = async (id: Id) => {
   try {
@@ -65,20 +92,6 @@ export const deleteEmployee = async (id: Id) => {
     const data = (await response?.data.data) || []
 
     return data
-  } catch (error) {
-    console.error('Error:', error)
-    return []
-  }
-}
-
-export const editEmployee = async (id: Id, employee: Employee) => {
-  try {
-    const payload = { data: employee }
-    const response = await api.put(`/employees/${id}`, payload)
-    const success = response.status === 200
-    const data = (await response?.data.data) || []
-
-    return { success, data }
   } catch (error) {
     console.error('Error:', error)
     return []

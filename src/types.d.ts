@@ -5,6 +5,14 @@ export type DocumentId = {
   documentId: string
 }
 
+export interface Params {
+  id: string
+}
+
+export interface ParamProp {
+  params: Promise<Params>
+}
+
 export type Boat = {
   name: string
   brand: string

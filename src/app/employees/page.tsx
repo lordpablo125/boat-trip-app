@@ -5,7 +5,6 @@ import React from 'react'
 
 const PageEmployeeList = () => {
   const data = useGetEmployees()
-  console.log('***  ~ PageEmployeeList  ~ data:', data)
 
   return <EmployeeList employees={data} />
 }
