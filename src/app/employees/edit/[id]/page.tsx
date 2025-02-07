@@ -1,11 +1,20 @@
-'use server'
+// 'use server'
+'use client'
 import FormEmployee from '@/components/EmployeeForm'
-import { getEmployee } from '@/service/employeeServices'
-import React from 'react'
+import { useGetEmployee } from '@/service/employeeServices'
+import React, { FC, use } from 'react'
 
-const EditEmployee = async ({ params }) => {
-  const { id } = await params
-  const employee = await getEmployee(id)
+interface Params {
+  id: string
+}
+
+interface EditEmployeeProps {
+  params: Promise<Params>
+}
+
+const EditEmployee: FC<EditEmployeeProps> = ({ params }) => {
+  const { id }: { id: string } = use(params)
+  const employee = useGetEmployee(id)
 
   return <FormEmployee title={'Edit Employee'} employee={employee} />
 }

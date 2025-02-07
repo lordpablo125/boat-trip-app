@@ -21,7 +21,7 @@ export type Employee = {
   id?: number
   name: string
   role: string
-  documentId: DocumentId
+  documentId: string
 }
 
 export type EmployeeTableProps = {

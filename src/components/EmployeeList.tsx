@@ -48,7 +48,7 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {employees.length &&
+            {employees?.length &&
               employees.map(({ id, name, role, documentId }: Employee) => (
                 <TableRow
                   key={name}

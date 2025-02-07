@@ -44,12 +44,14 @@ const FormEmployee: FC<EmployeeFormProps> = ({ title, employee = {} }) => {
     e.preventDefault()
     const formData = new FormData(e.target)
     const data: Employee = Object.fromEntries(formData.entries())
-    const isId = employee?.id
-    console.log('***  ~ handleSubmit  ~ data:', data)
+    const isId = employee?.documentId
 
     if (isId) {
       //edit
-      editEmployee(isId, data)
+      const { success } = await editEmployee(isId, data)
+      if (success) {
+        handleSuccess()
+      }
     } else {
       //create
       const { success } = await createEmployee(data)
