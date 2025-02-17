@@ -44,30 +44,6 @@ export const useGetEmployee = (documentId: DocumentId) => {
   return data
 }
 
-export const editEmployee = async (
-  documentId: DocumentId,
-  employee: Employee
-) => {
-  try {
-    const payload = { data: employee }
-    const response = await api.put(`/employees/${documentId}`, payload)
-    const success = response.status === 200
-    const data = (await response?.data.data) || []
-
-    return { success, data }
-  } catch (error) {
-    console.error('Error:', error)
-    return []
-  }
-}
-
-//WIP Check later
-export const useEditEmployee = (documentId: DocumentId, employee: Employee) =>
-  useMutation({
-    mutationKey: ['employee'],
-    mutationFn: () => editEmployee(documentId, employee)
-  })
-
 export const createEmployee = async (employee: Employee) => {
   try {
     const payload = { data: employee }
@@ -86,6 +62,31 @@ export const useCreateEmployee = () =>
     mutationFn: createEmployee
   })
 
+export const editEmployee = async ({
+  documentId,
+  employee
+}: {
+  documentId: DocumentId
+  employee: Employee
+}) => {
+  try {
+    const payload = { data: employee }
+    const response = await api.put(`/employees/${documentId}`, payload)
+    const data = (await response?.data.data) || []
+
+    return data
+  } catch (error) {
+    console.error('Error:', error)
+    return []
+  }
+}
+
+export const useEditEmployee = () => {
+  return useMutation({
+    mutationFn: editEmployee
+  })
+}
+
 export const deleteEmployee = async (id: Id) => {
   try {
     const response = await api.delete(`/employees/${id}`)
@@ -96,4 +97,11 @@ export const deleteEmployee = async (id: Id) => {
     console.error('Error:', error)
     return []
   }
+}
+
+export const useDeleteEmployee = (params: object) => {
+  return useMutation({
+    ...params,
+    mutationFn: deleteEmployee
+  })
 }

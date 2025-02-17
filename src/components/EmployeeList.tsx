@@ -1,9 +1,10 @@
 'use client'
-import { deleteEmployee } from '@/service/employeeServices'
-import { DocumentId, Employee, EmployeeTableProps, Id } from '@/types'
+import { useDeleteEmployee } from '@/service/employeeServices'
+import { Employee, EmployeeTableProps } from '@/types'
 import {
   Box,
   Button,
+  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -13,18 +14,26 @@ import {
   Typography
 } from '@mui/material'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { FC } from 'react'
-import DeleteIcon from '@mui/icons-material/Delete'
+import { FC, useState } from 'react'
 import AddIcon from '@mui/icons-material/Add'
+import DeleteIcon from '@mui/icons-material/Delete'
 import EditNoteIcon from '@mui/icons-material/EditNote'
 
 const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
-  const { push } = useRouter()
-
-  const handleRowClick = (documentId: DocumentId) => {
-    push(`/employees/edit/${documentId}`)
+  const [page, setPage] = useState(1)
+  const { mutate: deleteEmployee } = useDeleteEmployee({
+    onSuccess: () => window.location.reload()
+  })
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value)
   }
+
+  // if (isLoading) return <>Cargando...</>;
+  // if (isError) return <>Error al cargar los empleados</>;
+
   return (
     <Box className='flex flex-col items-start pl-4 '>
       <TableContainer className='flex flex-col items-center'>
@@ -50,11 +59,7 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
           <TableBody>
             {employees?.length &&
               employees.map(({ id, name, role, documentId }: Employee) => (
-                <TableRow
-                  key={name}
-                  className='hover:bg-slate-300'
-                  onClick={() => handleRowClick(documentId)}
-                >
+                <TableRow key={name} className='hover:bg-slate-300'>
                   <TableCell component='th' scope='row'>
                     {id}
                   </TableCell>
@@ -67,7 +72,11 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
                         className='ml-auto mr-4'
                         passHref
                       >
-                        <Button color='inherit' variant='outlined'>
+                        <Button
+                          className='bg-red-500'
+                          color='inherit'
+                          variant='outlined'
+                        >
                           <EditNoteIcon />
                         </Button>
                       </Link>
@@ -84,6 +93,16 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
               ))}
           </TableBody>
         </Table>
+        <Pagination
+          className='my-4'
+          color='primary'
+          count={5}
+          shape='rounded'
+          variant='outlined'
+          // count={data.totalPages}
+          page={page}
+          onChange={handlePageChange}
+        />
       </TableContainer>
     </Box>
   )

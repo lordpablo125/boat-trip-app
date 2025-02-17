@@ -25,6 +25,7 @@ const FormEmployee: FC<EmployeeFormProps> = ({ title, employee = {} }) => {
   const [open, setOpen] = React.useState(false)
   const { mutate: createEmployee, isSuccess: isCreateSuccess } =
     useCreateEmployee()
+  const { mutate: editEmployee, isSuccess: isEditSuccess } = useEditEmployee()
 
   const handleSuccess = () => {
     setOpen(true)
@@ -50,22 +51,23 @@ const FormEmployee: FC<EmployeeFormProps> = ({ title, employee = {} }) => {
     const isId = employee?.documentId
 
     if (isId) {
-      //edit
-      //WIP Check later
-      const { isSuccess } = await useEditEmployee(isId, data)
-      if (isSuccess) {
-        handleSuccess()
-      }
+      editEmployee({
+        documentId: isId,
+        employee: data
+      })
     } else {
       createEmployee(data)
     }
   }
 
-  useEffect(() => {
-    if (isCreateSuccess) {
-      handleSuccess()
-    }
-  }, [isCreateSuccess])
+  useEffect(
+    function showSnackbarOnSucces() {
+      if (isCreateSuccess || isEditSuccess) {
+        handleSuccess()
+      }
+    },
+    [isCreateSuccess, isEditSuccess]
+  )
 
   return (
     <Box className='flex justify-center flex-col'>
