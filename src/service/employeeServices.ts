@@ -23,7 +23,7 @@ export const useGetEmployees = () => {
   return data
 }
 
-export const getEmployee = async (documentId: DocumentId) => {
+export const getEmployee = async (documentId: string) => {
   try {
     const response = await api.get(`/employees/${documentId}`)
     const data = (await response?.data.data) || {}
@@ -35,7 +35,7 @@ export const getEmployee = async (documentId: DocumentId) => {
   }
 }
 
-export const useGetEmployee = (documentId: DocumentId) => {
+export const useGetEmployee = (documentId: string) => {
   const { data } = useQuery({
     queryKey: ['employee'],
     queryFn: () => getEmployee(documentId)

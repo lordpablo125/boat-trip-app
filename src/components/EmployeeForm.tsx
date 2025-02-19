@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 type EmployeeFormProps = {
   title: string
@@ -22,7 +22,7 @@ type EmployeeFormProps = {
 
 const FormEmployee: FC<EmployeeFormProps> = ({ title, employee = {} }) => {
   const { push } = useRouter()
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const { mutate: createEmployee, isSuccess: isCreateSuccess } =
     useCreateEmployee()
   const { mutate: editEmployee, isSuccess: isEditSuccess } = useEditEmployee()

@@ -31,9 +31,6 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
     setPage(value)
   }
 
-  // if (isLoading) return <>Cargando...</>;
-  // if (isError) return <>Error al cargar los empleados</>;
-
   return (
     <Box className='flex flex-col items-start pl-4 '>
       <TableContainer className='flex flex-col items-center'>
@@ -53,7 +50,7 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
               <TableCell>Id</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Role</TableCell>
-              <TableCell sx={{ textAlign: 'right' }}>Actions</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -66,7 +63,7 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
                   <TableCell>{name}</TableCell>
                   <TableCell>{role}</TableCell>
                   <TableCell>
-                    <Box className='text-right'>
+                    <Box>
                       <Link
                         href={`/employees/edit/${documentId}`}
                         className='ml-auto mr-4'
