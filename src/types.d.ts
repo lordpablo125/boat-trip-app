@@ -40,6 +40,7 @@ export type Passager = {
   id?: number
   name: string
   dni: string
+  documentId?: string
 }
 
 export type PassagerTableProps = {

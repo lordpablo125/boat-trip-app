@@ -1,9 +1,10 @@
+'use client'
 import PassagersList from '@/components/PassagersList'
-import { getPassagers } from '@/service/passagerServices'
+import { useGetPassagers } from '@/service/passagerServices'
 import React from 'react'
 
-const Page = async () => {
-  const passagers = await getPassagers()
+const Page = () => {
+  const passagers = useGetPassagers()
   return <PassagersList passagers={passagers} />
 }
 
