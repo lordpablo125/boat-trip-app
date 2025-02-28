@@ -19,8 +19,13 @@ import AddIcon from '@mui/icons-material/Add'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditNoteIcon from '@mui/icons-material/EditNote'
 
-const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
+//TODO refactor to be more modular & generic
+const EmployeeList: FC<EmployeeTableProps> = ({ useGetTableData }: any) => {
   const [page, setPage] = useState(1)
+  const { data } = useGetTableData({ page })
+  const employees = data?.data
+  const pagination = data?.meta?.pagination
+  console.log('***  ~ employees:', employees)
   const { mutate: deleteEmployee } = useDeleteEmployee({
     onSuccess: () => window.location.reload()
   })
@@ -47,56 +52,64 @@ const EmployeeList: FC<EmployeeTableProps> = ({ employees }) => {
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow sx={{ '& > th': { fontWeight: 700 } }}>
+              <TableCell>indx</TableCell>
               <TableCell>Id</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Role</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell>
+                <Box className={'text-right'}>Actions</Box>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {employees?.length &&
-              employees.map(({ id, name, role, documentId }: Employee) => (
-                <TableRow key={name} className='hover:bg-slate-300'>
-                  <TableCell component='th' scope='row'>
-                    {id}
-                  </TableCell>
-                  <TableCell>{name}</TableCell>
-                  <TableCell>{role}</TableCell>
-                  <TableCell>
-                    <Box>
-                      <Link
-                        href={`/employees/edit/${documentId}`}
-                        className='ml-auto mr-4'
-                        passHref
-                      >
-                        <Button
-                          className='bg-red-500'
-                          color='inherit'
-                          variant='outlined'
+              employees.map(
+                ({ id, name, role, documentId }: Employee, indx) => (
+                  <TableRow key={name} className='hover:bg-slate-300'>
+                    <TableCell component='th' scope='row'>
+                      {indx + 1}
+                    </TableCell>
+                    <TableCell component='th' scope='row'>
+                      {id}
+                    </TableCell>
+                    <TableCell>{name}</TableCell>
+                    <TableCell>{role}</TableCell>
+                    <TableCell>
+                      <Box className={'text-right'}>
+                        <Link
+                          href={`/employees/edit/${documentId}`}
+                          className='ml-auto mr-4'
+                          passHref
                         >
-                          <EditNoteIcon />
+                          <Button
+                            className='bg-red-500'
+                            color='inherit'
+                            variant='outlined'
+                          >
+                            <EditNoteIcon />
+                          </Button>
+                        </Link>
+                        <Button
+                          color='error'
+                          variant='outlined'
+                          onClick={() => deleteEmployee(documentId)}
+                        >
+                          <DeleteIcon />
                         </Button>
-                      </Link>
-                      <Button
-                        color='error'
-                        variant='outlined'
-                        onClick={() => deleteEmployee(documentId)}
-                      >
-                        <DeleteIcon />
-                      </Button>
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              ))}
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                )
+              )}
           </TableBody>
         </Table>
+        {console.log('***  ~ pagination?.page:', pagination?.page)}
         <Pagination
           className='my-4'
           color='primary'
-          count={5}
           shape='rounded'
           variant='outlined'
-          // count={data.totalPages}
+          count={pagination?.pageCount}
           page={page}
           onChange={handlePageChange}
         />

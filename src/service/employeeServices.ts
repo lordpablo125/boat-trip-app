@@ -2,10 +2,13 @@ import { DocumentId, Employee, Id } from '@/types'
 import { api } from './api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-export const getEmployees = async () => {
+export const getEmployees = async ({ page }) => {
+  console.log('***  ~ getEmployees  ~ page?????:', page)
   try {
-    const response = await api.get('/employees')
-    const data = (await response?.data.data) || []
+    const response = await api.get(
+      `/employees?pagination[page]=${page}&pagination[pageSize]=5`
+    )
+    const data = (await response?.data) || []
 
     return data
   } catch (error) {
@@ -14,13 +17,14 @@ export const getEmployees = async () => {
   }
 }
 
-export const useGetEmployees = () => {
-  const { data } = useQuery({
-    queryKey: ['employees'],
-    queryFn: getEmployees
+export const useGetEmployees = (obj: object) => {
+  console.log('***  ~ useGetEmployees  ~ obj:', obj)
+  const query = useQuery({
+    queryKey: ['employees', obj],
+    queryFn: () => getEmployees(obj)
   })
 
-  return data
+  return query
 }
 
 export const getEmployee = async (documentId: string) => {
