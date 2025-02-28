@@ -3,7 +3,6 @@ import { api } from './api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 export const getEmployees = async ({ page }) => {
-  console.log('***  ~ getEmployees  ~ page?????:', page)
   try {
     const response = await api.get(
       `/employees?pagination[page]=${page}&pagination[pageSize]=5`
@@ -18,7 +17,6 @@ export const getEmployees = async ({ page }) => {
 }
 
 export const useGetEmployees = (obj: object) => {
-  console.log('***  ~ useGetEmployees  ~ obj:', obj)
   const query = useQuery({
     queryKey: ['employees', obj],
     queryFn: () => getEmployees(obj)

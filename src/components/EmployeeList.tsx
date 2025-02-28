@@ -25,7 +25,6 @@ const EmployeeList: FC<EmployeeTableProps> = ({ useGetTableData }: any) => {
   const { data } = useGetTableData({ page })
   const employees = data?.data
   const pagination = data?.meta?.pagination
-  console.log('***  ~ employees:', employees)
   const { mutate: deleteEmployee } = useDeleteEmployee({
     onSuccess: () => window.location.reload()
   })
