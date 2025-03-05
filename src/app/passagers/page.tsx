@@ -1,11 +1,26 @@
 'use client'
-import PassagersList from '@/components/PassagersList'
-import { useGetPassagers } from '@/service/passagerServices'
+import CustomTableData from '@/components/CustomTableData'
+import { useDeletePassager, useGetPassagers } from '@/service/passagerServices'
 import React from 'react'
 
 const Page = () => {
-  const passagers = useGetPassagers()
-  return <PassagersList passagers={passagers} />
+  const columns = [
+    { key: 'id', label: 'Id' },
+    { key: 'name', label: 'Name' },
+    { key: 'dni', label: 'DNI' }
+  ]
+  const { mutate: deletePassager } = useDeletePassager({
+    onSuccess: () => window.location.reload()
+  })
+
+  return (
+    <CustomTableData
+      columns={columns}
+      addNewURI={'passagers'}
+      useGetTableData={useGetPassagers}
+      deteleMutation={deletePassager}
+    />
+  )
 }
 
 export default Page

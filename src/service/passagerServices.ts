@@ -2,10 +2,12 @@ import { Passager } from '@/types'
 import { api } from './api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-export const getPassagers = async () => {
+export const getPassagers = async ({ page }) => {
   try {
-    const response = await api.get('/passagers')
-    const data = (await response?.data.data) || []
+    const response = await api.get(
+      `/passagers?pagination[page]=${page}&pagination[pageSize]=5`
+    )
+    const data = (await response?.data) || []
 
     return data
   } catch (error) {
@@ -14,13 +16,13 @@ export const getPassagers = async () => {
   }
 }
 
-export const useGetPassagers = () => {
-  const { data } = useQuery({
+export const useGetPassagers = (obj: object) => {
+  const query = useQuery({
     queryKey: ['passagers'],
-    queryFn: getPassagers
+    queryFn: () => getPassagers(obj)
   })
 
-  return data
+  return query
 }
 
 export const getPassager = async (documentId: string) => {
