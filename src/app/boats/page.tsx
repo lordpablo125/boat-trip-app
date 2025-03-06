@@ -1,25 +1,12 @@
 'use client'
 import BoatCard from '@/components/BoatCard'
-import { getBoats } from '@/service/boatServices'
-import React, { useEffect, useState } from 'react'
+import { useGetBoats } from '@/service/boatServices'
+import React from 'react'
 
-const Page = () => {
-  const [boats, setBoats] = useState([])
-  console.log('***  ~ Page  ~ boats:', boats)
-  const fetchData = async () => {
-    try {
-      const data = await getBoats()
-      setBoats(data)
-    } catch (error) {
-      console.error('Failed to fetch boats:', error)
-    }
-  }
+const BoatPage = () => {
+  const { data } = useGetBoats({ page: 1 })
 
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  return <BoatCard boats={boats} />
+  return <BoatCard boats={data?.data} />
 }
 
-export default Page
+export default BoatPage

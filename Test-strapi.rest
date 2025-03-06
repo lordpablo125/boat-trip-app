@@ -16,6 +16,8 @@ Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
 
 
 
+
+
 ### Employees
 GET http://127.0.0.0:1337/api/employees
 Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
@@ -57,3 +59,20 @@ content-type: application/json
 }
 }
 ###
+
+
+### boats
+GET http://127.0.0.0:1337/api/boats?populate=image
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+### boats
+GET http://127.0.0.0:1337/api/boats?populate=image&fields[image]=formats
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+### boats
+GET http://127.0.0.0:1337/api/boats?populate[image][fields][0]=url
+Authorization: Bearer {{$dotenv NEXT_PUBLIC_API_TOKEN}}
+
+"image": {
+  formats: {
+    thumbnail
+  }
+}

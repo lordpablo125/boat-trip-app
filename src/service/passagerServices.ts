@@ -18,7 +18,7 @@ export const getPassagers = async ({ page }) => {
 
 export const useGetPassagers = (obj: object) => {
   const query = useQuery({
-    queryKey: ['passagers'],
+    queryKey: ['passagers', obj],
     queryFn: () => getPassagers(obj)
   })
 
@@ -51,7 +51,6 @@ export const createPassager = async (passager: Passager) => {
     const payload = { data: passager }
     const response = await api.post('/passagers', payload)
     const data = (await response?.data.data) || []
-    console.log('***  ~ createPassager  ~ passagers data:', data)
 
     return data
   } catch (error) {
