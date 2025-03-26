@@ -2,9 +2,7 @@ import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import Link from 'next/link'
-import { MenuItem, Select } from '@mui/material'
 
 const Navbar = () => {
   const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME
@@ -15,23 +13,17 @@ const Navbar = () => {
           <Typography variant='h6' component='span' sx={{ flexGrow: 1 }}>
             {APP_NAME}
           </Typography>
-          <Select
-            className='text-white'
-            name='currency'
-            defaultValue='USD'
-            label='Currency'
-          >
-            <MenuItem value='USD'>USA</MenuItem>
-            <MenuItem value='EUR'>EUR</MenuItem>
-          </Select>
           <Link href='/employees' passHref>
-            <Button color='inherit'>Employees</Button>
+            <Box className='hover:underline'>Employees</Box>
           </Link>
           <Link href='/passagers' passHref>
-            <Button color='inherit'>Passagers</Button>
+            <Box className='hover:underline'>Passagers</Box>
           </Link>
           <Link href='/boats' passHref>
-            <Button color='inherit'>Boats</Button>
+            <Box className='hover:underline'>Boats</Box>
+          </Link>
+          <Link href='/trips' passHref>
+            <Box className='hover:underline'>Trips</Box>
           </Link>
         </Toolbar>
       </AppBar>
