@@ -2,7 +2,7 @@ import { Passager } from '@/types'
 import { api } from './api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
-export const getPassagers = async ({ page }) => {
+export const getPassagers = async ({ page = 1 }) => {
   try {
     const response = await api.get(
       `/passagers?pagination[page]=${page}&pagination[pageSize]=5`
@@ -16,7 +16,7 @@ export const getPassagers = async ({ page }) => {
   }
 }
 
-export const useGetPassagers = (obj: object) => {
+export const useGetPassagers = (obj?: object) => {
   const query = useQuery({
     queryKey: ['passagers', obj],
     queryFn: () => getPassagers(obj)

@@ -15,6 +15,7 @@ const Page = () => {
 
   return (
     <CustomTableData
+      title={'Passagers'}
       columns={columns}
       addNewURI={'passagers'}
       useGetTableData={useGetPassagers}

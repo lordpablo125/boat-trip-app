@@ -16,6 +16,7 @@ const PageEmployeeList = () => {
 
   return (
     <CustomTableData
+      title={'Employees'}
       columns={columns}
       addNewURI={'employees'}
       useGetTableData={useGetEmployees}
