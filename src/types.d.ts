@@ -41,8 +41,20 @@ export type Passager = {
   name: string
   dni: string
   documentId?: string
+  startTime?: string
 }
 
 export type PassagerTableProps = {
   passagers: Passager[]
+}
+
+export type Trip = {
+  id?: number
+  passagerNumber: number | string
+  passagers: string[]
+  type: string
+  date: string
+  documentId?: string
+  startTime: string
+  endTime?: string
 }

@@ -11,13 +11,21 @@ interface OptionType {
 type Props = {
   label: string
   options: OptionType[]
+  value: object[]
+  onChange: (value: object[]) => void
 }
 
-const MultiSelectWithChips: FC<Props> = ({ label = 'Seleccione', options }) => {
-  const [selectedValues, setSelectedValues] = useState([])
-
+const MultiSelectWithChips: FC<Props> = ({
+  label = 'Seleccione',
+  options,
+  value,
+  onChange
+}) => {
   if (!options) {
     return <></>
+  }
+  const handleChange = (event, newValue) => {
+    onChange(newValue)
   }
 
   return (
@@ -25,8 +33,8 @@ const MultiSelectWithChips: FC<Props> = ({ label = 'Seleccione', options }) => {
       multiple
       options={options}
       getOptionLabel={(option) => option.name}
-      value={selectedValues}
-      onChange={(event, newValue) => setSelectedValues(newValue)}
+      value={value}
+      onChange={handleChange}
       renderTags={(value) =>
         value.map((option) => (
           <Chip

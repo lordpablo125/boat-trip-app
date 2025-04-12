@@ -1,4 +1,4 @@
-import { DocumentId, Employee, Id } from '@/types'
+import { DocumentId, Employee, Id, Trip } from '@/types'
 import { api } from './api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
@@ -47,10 +47,10 @@ export const useGetEmployee = (documentId: string) => {
   return data
 }
 
-export const createEmployee = async (employee: Employee) => {
+export const createTrips = async (trip: Trip) => {
   try {
-    const payload = { data: employee }
-    const response = await api.post('/employees', payload)
+    const payload = { data: trip }
+    const response = await api.post('/trips', payload)
     const data = (await response?.data.data) || []
 
     return data
@@ -60,9 +60,9 @@ export const createEmployee = async (employee: Employee) => {
   }
 }
 
-export const useCreateEmployee = () =>
+export const useCreateTrips = () =>
   useMutation({
-    mutationFn: createEmployee
+    mutationFn: createTrips
   })
 
 export const editEmployee = async ({
