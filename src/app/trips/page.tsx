@@ -6,17 +6,14 @@ import { format } from 'date-fns'
 
 //TODO modify names
 const TripsPage = () => {
-  const formatTime = (val) => {
+  const formatTime = (val: string) => {
     if (!val) {
       return '00:00'
     }
     const [horas, minutos, segundos] = val.split(':').map(Number)
-
-    // Creamos un objeto Date base (usamos la fecha de hoy por default)
     const base = new Date()
     const horaDate = new Date(base.setHours(horas, minutos, segundos, 0))
 
-    // Formateamos
     return format(horaDate, 'HH:mm')
   }
 
@@ -27,7 +24,7 @@ const TripsPage = () => {
     {
       key: 'startTime',
       label: 'startTime',
-      render: (time) => {
+      render: (time: string) => {
         const formatedValue = formatTime(time)
         return <>{formatedValue}</>
       }
@@ -35,16 +32,12 @@ const TripsPage = () => {
     {
       key: 'endTime',
       label: 'endTime',
-      render: (time) => {
-        console.log('***  ~ TripsPage  ~ time:', time)
+      render: (time: string) => {
         const formatedValue = formatTime(time)
         return <>{formatedValue}</>
       }
     }
   ]
-  // const { mutate: deletePassager } = useDeletePassager({
-  //   onSuccess: () => window.location.reload()
-  // })
 
   return (
     <CustomTableData
