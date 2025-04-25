@@ -26,22 +26,28 @@ export const useGetTrips = (obj: object) => {
   return query
 }
 
-export const getEmployee = async (documentId: string) => {
+export const getTrip = async (documentId: string) => {
   try {
-    const response = await api.get(`/employees/${documentId}`)
+    const response = await api.get(
+      `/trips/${documentId}?populate[passagers][fields][0]=documentId&populate[crew][fields][0]=documentId`
+    )
     const data = (await response?.data.data) || {}
+    const formatedData = {
+      ...data,
+      passagers: data?.passagers.map((p) => p.documentId)
+    }
 
-    return data
+    return formatedData
   } catch (error) {
     console.error('Error:', error)
     return []
   }
 }
 
-export const useGetEmployee = (documentId: string) => {
+export const useGetTrip = (documentId: string) => {
   const { data } = useQuery({
-    queryKey: ['employee'],
-    queryFn: () => getEmployee(documentId)
+    queryKey: ['trip'],
+    queryFn: () => getTrip(documentId)
   })
 
   return data
@@ -65,7 +71,8 @@ export const useCreateTrips = () =>
     mutationFn: createTrips
   })
 
-export const editEmployee = async ({
+// Trips
+export const editTrip = async ({
   documentId,
   employee
 }: {
@@ -74,7 +81,7 @@ export const editEmployee = async ({
 }) => {
   try {
     const payload = { data: employee }
-    const response = await api.put(`/employees/${documentId}`, payload)
+    const response = await api.put(`/trips/${documentId}`, payload)
     const data = (await response?.data.data) || []
 
     return data
@@ -84,9 +91,9 @@ export const editEmployee = async ({
   }
 }
 
-export const useEditEmployee = () => {
+export const useEditTrips = () => {
   return useMutation({
-    mutationFn: editEmployee
+    mutationFn: editTrips
   })
 }
 
