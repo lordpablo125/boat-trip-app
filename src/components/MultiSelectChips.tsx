@@ -1,16 +1,11 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import TextField from '@mui/material/TextField'
 import Autocomplete from '@mui/material/Autocomplete'
 import Chip from '@mui/material/Chip'
 
-interface OptionType {
-  id: number
-  name: string
-}
-
 type Props = {
   label: string
-  options: OptionType[]
+  options: string[]
   value: object[]
   onChange: (value: object[]) => void
 }
@@ -25,7 +20,9 @@ const MultiSelectWithChips: FC<Props> = ({
     return <></>
   }
   const handleChange = (event, newValue) => {
-    onChange(newValue)
+    if (onChange) {
+      onChange(newValue)
+    }
   }
 
   return (
