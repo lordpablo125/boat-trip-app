@@ -1,5 +1,5 @@
 'use client'
-import { Employee, Passager, Trip } from '@/types'
+import { Passager, Trip } from '@/types'
 import {
   Alert,
   Box,
@@ -12,22 +12,21 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { format, addDays, add } from 'date-fns'
 import PassagerMultiselect from './PassagerMultiselect'
 import { useCreateTrips } from '@/service/tripsServices'
 
 type TripFormProps = {
   title: string
-  trip?: Employee
+  trip?: Trip
 }
 
 const TripForm: FC<TripFormProps> = ({ title, trip = {} }) => {
-  const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd') // Calcula el día siguiente
+  const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd')
   const { push } = useRouter()
   const [open, setOpen] = useState(false)
   const [passagers, setPassagers] = useState<Passager[]>([])
-  console.log('***  ~ passagers:', passagers)
   const { mutate: createTrip, isSuccess: isCreateSuccess } = useCreateTrips()
 
   const handleSuccess = () => {
@@ -35,7 +34,10 @@ const TripForm: FC<TripFormProps> = ({ title, trip = {} }) => {
     push(`/trips`)
   }
 
-  const handlePassagerChange = (value: Passager[]) => setPassagers(value)
+  const handlePassagerChange = (value: Passager[]) => {
+    const ids = value.map((v) => v.documentId)
+    setPassagers(value)
+  }
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -60,8 +62,6 @@ const TripForm: FC<TripFormProps> = ({ title, trip = {} }) => {
     const horaBase = new Date(hoy.setHours(hora, minutos, 0, 0))
     const nuevaHora = add(horaBase, { hours: 3 })
     const endTime = format(nuevaHora, 'HH:mm')
-    // return
-    console.log('***  ~ handleSubmit  ~ data:', data, { passagersArray })
 
     await createTrip({
       ...data,
@@ -74,6 +74,13 @@ const TripForm: FC<TripFormProps> = ({ title, trip = {} }) => {
       handleSuccess()
     }
   }
+
+  useEffect(() => {
+    if (trip?.passagers) {
+      console.log('***  ~ useEffect  ~ trip?.passagers:', trip?.passagers)
+      setPassagers(trip?.passagers)
+    }
+  }, [trip])
 
   return (
     <Box className='flex justify-center flex-col'>
@@ -118,32 +125,21 @@ const TripForm: FC<TripFormProps> = ({ title, trip = {} }) => {
           label='passagerNumber'
           name='passagerNumber'
           type='number'
-          value={45}
-          slotProps={{
-            input: {
-              readOnly: true
-            }
-          }}
+          defaultValue={45}
         />
         <TextField
           label='price'
           name='price'
           type='number'
           required
-          value={400}
-          slotProps={{
-            input: {
-              readOnly: true
-            }
-          }}
+          defaultValue={400}
         />
 
         <PassagerMultiselect
-          value={passagers}
+          values={passagers}
           onChange={handlePassagerChange}
         />
-        {/* <MultiSelectWithChips label={'Crew'} options={employeeData?.data} />
-        <MultiSelectWithChips label={'Skipper'} options={employeeData?.data} /> */}
+
         <Box className='mx-auto'>
           <Link href='/trips' className='ml-auto mr-4' passHref>
             <Button color='inherit' variant='contained'>
