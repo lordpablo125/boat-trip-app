@@ -1,27 +1,42 @@
-import { FC } from 'react'
+'use client'
+import { FC, useEffect, useState } from 'react'
 import MultiSelectWithChips from './MultiSelectChips'
 import { useGetPassagers } from '@/service/passagerServices'
 import { Passager } from '@/types'
 
 type PassagerMultiselectProps = {
   label?: string
-  value: Passager[]
+  values: Passager[]
   onChange: (value: object[]) => void
 }
 
 const PassagerMultiselect: FC<PassagerMultiselectProps> = ({
   label = 'Passagers',
-  value,
+  values,
   onChange
 }) => {
-  const { data: passagerData } = useGetPassagers({ page: 1 })
+  const { data: passagerData, isLoading } = useGetPassagers({ page: 1 })
+  const [formatedData, setFormatedData] = useState([])
+
+  useEffect(() => {
+    if (values && !isLoading) {
+      const test = values[0]
+      const val =
+        test && typeof test === 'string'
+          ? passagerData?.data.filter((pd: Passager) =>
+              values.includes(pd.documentId)
+            )
+          : values
+      setFormatedData(val)
+    }
+  }, [values, isLoading, passagerData?.data])
 
   return (
     <>
       <MultiSelectWithChips
         label={label}
         options={passagerData?.data}
-        value={value}
+        value={formatedData}
         onChange={onChange}
       />
     </>
