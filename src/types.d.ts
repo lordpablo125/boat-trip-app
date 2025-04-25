@@ -51,7 +51,7 @@ export type PassagerTableProps = {
 export type Trip = {
   id?: number
   passagerNumber: number | string
-  passagers: string[]
+  passagers: Passager[]
   type: string
   date: string
   documentId?: string
