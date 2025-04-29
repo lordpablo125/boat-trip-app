@@ -1,5 +1,5 @@
 'use client'
-import { Passager, Trip } from '@/types'
+import { Employee, Passager, Trip } from '@/types'
 import {
   Alert,
   Box,
@@ -16,6 +16,8 @@ import React, { FC, useEffect, useState } from 'react'
 import { format, addDays, add } from 'date-fns'
 import PassagerMultiselect from './PassagerMultiselect'
 import { useCreateTrips } from '@/service/tripsServices'
+import AssistantsMultiselect from './AssistantsMultiselect'
+import SkippersMultiselect from './SkippersMultiselect'
 
 type TripFormProps = {
   title: string
@@ -27,6 +29,8 @@ const TripForm: FC<TripFormProps> = ({ title, trip = {} }) => {
   const { push } = useRouter()
   const [open, setOpen] = useState(false)
   const [passagers, setPassagers] = useState<Passager[]>([])
+  const [assistants, setAssistants] = useState([])
+  const [skippers, setSkippers] = useState([])
   const { mutate: createTrip, isSuccess: isCreateSuccess } = useCreateTrips()
 
   const handleSuccess = () => {
@@ -37,6 +41,16 @@ const TripForm: FC<TripFormProps> = ({ title, trip = {} }) => {
   const handlePassagerChange = (value: Passager[]) => {
     const ids = value.map((v) => v.documentId)
     setPassagers(value)
+  }
+
+  const handleAssistantsChange = (value: Employee[]) => {
+    const ids = value.map((v) => v.documentId)
+    setAssistants(value)
+  }
+
+  const handleSkippersChange = (value: Employee[]) => {
+    const ids = value.map((v) => v.documentId)
+    setSkippers(value)
   }
 
   const handleClose = (
@@ -138,6 +152,14 @@ const TripForm: FC<TripFormProps> = ({ title, trip = {} }) => {
         <PassagerMultiselect
           values={passagers}
           onChange={handlePassagerChange}
+        />
+        <AssistantsMultiselect
+          values={assistants}
+          onChange={handleAssistantsChange}
+        />
+        <SkippersMultiselect
+          values={skippers}
+          onChange={handleSkippersChange}
         />
 
         <Box className='mx-auto'>

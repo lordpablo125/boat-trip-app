@@ -25,6 +25,48 @@ export const useGetEmployees = (obj: object) => {
   return query
 }
 
+export const getAssistants = async () => {
+  try {
+    const response = await api.get(`/employees?filters[role][$eq]=assistant`)
+    const data = (await response?.data) || []
+
+    return data
+  } catch (error) {
+    console.error('Error:', error)
+    return []
+  }
+}
+
+export const useGetAssistants = () => {
+  const query = useQuery({
+    queryKey: ['assistants'],
+    queryFn: getAssistants
+  })
+
+  return query
+}
+
+export const getSkippers = async () => {
+  try {
+    const response = await api.get(`/employees?filters[role][$eq]=skipper`)
+    const data = (await response?.data) || []
+
+    return data
+  } catch (error) {
+    console.error('Error:', error)
+    return []
+  }
+}
+
+export const useGetSkippers = () => {
+  const query = useQuery({
+    queryKey: ['skippers'],
+    queryFn: getSkippers
+  })
+
+  return query
+}
+
 export const getEmployee = async (documentId: string) => {
   try {
     const response = await api.get(`/employees/${documentId}`)
